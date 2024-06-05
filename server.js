@@ -1,4 +1,5 @@
 const express = require('express');
+const { Worker } = require('worker_threads');
 
 const app = express();
 
@@ -7,12 +8,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/compute', (req, res) => {
-    let count = 0;
-    for (let i = 0; i < 4_000_000_000; i++) {
-        // Simulate CPU Work: a computation that takes a long time 
-        count++
-    } 
-    res.send(`Ok ${count}`);
+    const worker = new Worker('./worker-thread.js');
+    worker.on('message', (msg) => {
+        res.send(`Ok ${msg}`);
+    });
 })
 
 const PORT = 7000;
