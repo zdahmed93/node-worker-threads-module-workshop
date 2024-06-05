@@ -7,10 +7,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/compute', (req, res) => {
-    for (let i = 0; i <= 4_000_000_000; i++) {
+    let count = 0;
+    for (let i = 0; i < 4_000_000_000; i++) {
         // Simulate CPU Work: a computation that takes a long time 
+        count++
     } 
-    res.send('Ok');
+    res.send(`Ok ${count}`);
 })
 
 const PORT = 7000;
